@@ -15,7 +15,8 @@ So running `bin/launchpad --verbose` in any project that has `plexus-utils` 4.x 
 or say via `com.lambdaisland/garden → resources-optimizer-maven-plugin` results in the error
 
 ```
-Execution error (ClassNotFoundException) at java.net.URLClassLoader/findClass (URLClassLoader.java:377).
+Execution error (ClassNotFoundException) at java.net.URLClassLoader/findClass
+                (URLClassLoader.java:377).
 org.codehaus.plexus.util.xml.Xpp3Dom
 ```
 
