@@ -1,0 +1,2 @@
+{:deps {org.clojure/clojure                {:mvn/version "1.12.5"}
+          org.codehaus.plexus/plexus-utils {:mvn/version "4.0.3"}}}

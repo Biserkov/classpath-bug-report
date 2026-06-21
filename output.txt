@@ -1,0 +1,182 @@
+bin/launchpad --verbose
+Launching Clojure on nREPL port 60648
+Options: verbose
+[DEBUG] clojure 
+    -J--add-opens=java.base/java.lang=ALL-UNNAMED
+    -J--add-opens=java.base/java.util=ALL-UNNAMED
+    -J-XX:-OmitStackTraceInFastThrow
+    -J-Dclojure.main.report=stderr
+    -J-Djdk.attach.allowAttachSelf
+    -J-XX:+EnableDynamicAgentLoading
+    -J-Dlambdaisland.launchpad.aliases= -Sdeps
+     '{:deps {nrepl/nrepl #:mvn{:version "1.4.0"}
+              com.lambdaisland/launchpad #:mvn{:version "0.50.226-alpha"}
+              com.lambdaisland/classpath #:mvn{:version "0.6.58"}
+              com.github.jnr/jnr-posix #:mvn{:version "3.1.20"}}
+       :paths ()
+       :aliases nil}'
+        -M -e '(do
+                 nil
+                 (require (quote nrepl.cmdline)
+                          (quote lambdaisland.launchpad.watcher)
+                          (quote lambdaisland.launchpad.deps)
+                          (quote lambdaisland.launchpad.env)
+                          (quote lambdaisland.launchpad.env.hacks))
+                 (lambdaisland.launchpad.deps/write-cpcache-file)
+                 (clojure.core/future (lambdaisland.launchpad.watcher/watch!
+                    (merge
+                        (lambdaisland.launchpad.deps/watch-handlers
+                             {:aliases []
+                              :include-local-roots? true
+                              :basis-fn lambdaisland.launchpad.deps/basis
+                              :watch-paths nil
+                              :launchpad/extra-deps (quote {nrepl/nrepl #:mvn{:version "1.4.0"}
+                              com.lambdaisland/launchpad #:mvn{:version "0.50.226-alpha"}
+                              com.lambdaisland/classpath #:mvn{:version "0.6.58"}})})
+                        (lambdaisland.launchpad.env.hacks/watch-handlers
+                            {:watch-paths [(.resolve lambdaisland.classpath.watch-deps/process-root-path ".env")
+                                           (.resolve lambdaisland.classpath.watch-deps/process-root-path ".env.local")]
+                             :parse-fn (quote lambdaisland.launchpad.env/parse-dotenv)}))))
+                (nrepl.cmdline/-main "--port" "60648" "--bind" "127.0.0.1" "--middleware" "[]"))'
+[DEBUG] Waiting for nREPL port to be reachable on 60648
+{:clojure.main/message
+ "Execution error (ClassNotFoundException) at java.net.URLClassLoader/findClass (URLClassLoader.java:377).
+ org.codehaus.plexus.util.xml.Xpp3Dom",
+ :clojure.main/triage
+ {:clojure.error/class java.lang.ClassNotFoundException,
+  :clojure.error/line 377,
+  :clojure.error/cause "org.codehaus.plexus.util.xml.Xpp3Dom",
+  :clojure.error/symbol java.net.URLClassLoader/findClass,
+  :clojure.error/source "URLClassLoader.java",
+  :clojure.error/phase :execution},
+ :clojure.main/trace
+ {:via
+  [{:type clojure.lang.Compiler$CompilerException, :message "Syntax error macroexpanding at (clojure/tools/deps/alpha/util/maven.clj:1:1).", :data {:clojure.error/phase :execution,  :clojure.error/line 1,  :clojure.error/column 1,  :clojure.error/source "clojure/tools/deps/alpha/util/maven.clj"}, :at [clojure.lang.Compiler load "Compiler.java" 8235]}
+   {:type java.lang.ClassNotFoundException, :message "org.codehaus.plexus.util.xml.Xpp3Dom", :at [java.net.URLClassLoader findClass "URLClassLoader.java" 377]}],
+  :trace
+  [[java.net.URLClassLoader findClass "URLClassLoader.java" 377]
+   [clojure.lang.DynamicClassLoader findClass "DynamicClassLoader.java" 69]
+   [java.lang.ClassLoader loadClass "ClassLoader.java" 569]
+   [clojure.lang.DynamicClassLoader loadClass "DynamicClassLoader.java" 77]
+   [java.lang.ClassLoader loadClass "ClassLoader.java" 502]
+   [java.lang.Class forName0 "Class.java" -2]
+   [java.lang.Class forName "Class.java" 560]
+   [clojure.lang.RT classForName "RT.java" 2229]
+   [clojure.lang.RT classForNameNonLoading "RT.java" 2242]
+   [clojure.tools.deps.alpha.util.maven$eval3173$loading__6814__auto____3174 invoke "maven.clj" 9]
+   [clojure.tools.deps.alpha.util.maven$eval3173 invokeStatic "maven.clj" 9]
+   [clojure.tools.deps.alpha.util.maven$eval3173 invoke "maven.clj" 9]
+   [clojure.lang.Compiler eval "Compiler.java" 7757]
+   [clojure.lang.Compiler eval "Compiler.java" 7746]
+   [clojure.lang.Compiler load "Compiler.java" 8223]
+   [clojure.lang.RT loadResourceScript "RT.java" 401]
+   [clojure.lang.RT loadResourceScript "RT.java" 392]
+   [clojure.lang.RT load "RT.java" 479]
+   [clojure.lang.RT load "RT.java" 444]
+   [clojure.core$load$fn__6933 invoke "core.clj" 6193]
+   [clojure.core$load invokeStatic "core.clj" 6192]
+   [clojure.core$load doInvoke "core.clj" 6176]
+   [clojure.lang.RestFn invoke "RestFn.java" 411]
+   [clojure.core$load_one invokeStatic "core.clj" 5965]
+   [clojure.core$load_one invoke "core.clj" 5960]
+   [clojure.core$load_lib$fn__6875 invoke "core.clj" 6007]
+   [clojure.core$load_lib invokeStatic "core.clj" 6006]
+   [clojure.core$load_lib doInvoke "core.clj" 5985]
+   [clojure.lang.RestFn applyTo "RestFn.java" 145]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$load_libs invokeStatic "core.clj" 6048]
+   [clojure.core$load_libs doInvoke "core.clj" 6032]
+   [clojure.lang.RestFn applyTo "RestFn.java" 140]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$require invokeStatic "core.clj" 6070]
+   [clojure.core$require doInvoke "core.clj" 6070]
+   [clojure.lang.RestFn invoke "RestFn.java" 485]
+   [clojure.tools.deps.alpha.extensions.maven$eval3165$loading__6814__auto____3166 invoke "maven.clj" 9]
+   [clojure.tools.deps.alpha.extensions.maven$eval3165 invokeStatic "maven.clj" 9]
+   [clojure.tools.deps.alpha.extensions.maven$eval3165 invoke "maven.clj" 9]
+   [clojure.lang.Compiler eval "Compiler.java" 7757]
+   [clojure.lang.Compiler eval "Compiler.java" 7746]
+   [clojure.lang.Compiler load "Compiler.java" 8223]
+   [clojure.lang.RT loadResourceScript "RT.java" 401]
+   [clojure.lang.RT loadResourceScript "RT.java" 392]
+   [clojure.lang.RT load "RT.java" 479]
+   [clojure.lang.RT load "RT.java" 444]
+   [clojure.core$load$fn__6933 invoke "core.clj" 6193]
+   [clojure.core$load invokeStatic "core.clj" 6192]
+   [clojure.core$load doInvoke "core.clj" 6176]
+   [clojure.lang.RestFn invoke "RestFn.java" 411]
+   [clojure.tools.deps.alpha$eval3159 invokeStatic "alpha.clj" 832]
+   [clojure.tools.deps.alpha$eval3159 invoke "alpha.clj" 832]
+   [clojure.lang.Compiler eval "Compiler.java" 7757]
+   [clojure.lang.Compiler load "Compiler.java" 8223]
+   [clojure.lang.RT loadResourceScript "RT.java" 401]
+   [clojure.lang.RT loadResourceScript "RT.java" 392]
+   [clojure.lang.RT load "RT.java" 479]
+   [clojure.lang.RT load "RT.java" 444]
+   [clojure.core$load$fn__6933 invoke "core.clj" 6193]
+   [clojure.core$load invokeStatic "core.clj" 6192]
+   [clojure.core$load doInvoke "core.clj" 6176]
+   [clojure.lang.RestFn invoke "RestFn.java" 411]
+   [clojure.core$load_one invokeStatic "core.clj" 5965]
+   [clojure.core$load_one invoke "core.clj" 5960]
+   [clojure.core$load_lib$fn__6875 invoke "core.clj" 6007]
+   [clojure.core$load_lib invokeStatic "core.clj" 6006]
+   [clojure.core$load_lib doInvoke "core.clj" 5985]
+   [clojure.lang.RestFn applyTo "RestFn.java" 145]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$load_libs invokeStatic "core.clj" 6048]
+   [clojure.core$load_libs doInvoke "core.clj" 6032]
+   [clojure.lang.RestFn applyTo "RestFn.java" 140]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$require invokeStatic "core.clj" 6070]
+   [clojure.core$require doInvoke "core.clj" 6070]
+   [clojure.lang.RestFn invoke "RestFn.java" 515]
+   [lambdaisland.launchpad.deps$eval2599$loading__6814__auto____2600 invoke "deps.clj" 1]
+   [lambdaisland.launchpad.deps$eval2599 invokeStatic "deps.clj" 1]
+   [lambdaisland.launchpad.deps$eval2599 invoke "deps.clj" 1]
+   [clojure.lang.Compiler eval "Compiler.java" 7757]
+   [clojure.lang.Compiler eval "Compiler.java" 7746]
+   [clojure.lang.Compiler load "Compiler.java" 8223]
+   [clojure.lang.RT loadResourceScript "RT.java" 401]
+   [clojure.lang.RT loadResourceScript "RT.java" 392]
+   [clojure.lang.RT load "RT.java" 479]
+   [clojure.lang.RT load "RT.java" 444]
+   [clojure.core$load$fn__6933 invoke "core.clj" 6193]
+   [clojure.core$load invokeStatic "core.clj" 6192]
+   [clojure.core$load doInvoke "core.clj" 6176]
+   [clojure.lang.RestFn invoke "RestFn.java" 411]
+   [clojure.core$load_one invokeStatic "core.clj" 5965]
+   [clojure.core$load_one invoke "core.clj" 5960]
+   [clojure.core$load_lib$fn__6875 invoke "core.clj" 6007]
+   [clojure.core$load_lib invokeStatic "core.clj" 6006]
+   [clojure.core$load_lib doInvoke "core.clj" 5985]
+   [clojure.lang.RestFn applyTo "RestFn.java" 145]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$load_libs invokeStatic "core.clj" 6048]
+   [clojure.core$load_libs doInvoke "core.clj" 6032]
+   [clojure.lang.RestFn applyTo "RestFn.java" 140]
+   [clojure.core$apply invokeStatic "core.clj" 669]
+   [clojure.core$require invokeStatic "core.clj" 6070]
+   [clojure.core$require doInvoke "core.clj" 6070]
+   [clojure.lang.RestFn invoke "RestFn.java" 485]
+   [user$eval1 invokeStatic "NO_SOURCE_FILE" 1]
+   [user$eval1 invoke "NO_SOURCE_FILE" 1]
+   [clojure.lang.Compiler eval "Compiler.java" 7757]
+   [clojure.lang.Compiler eval "Compiler.java" 7746]
+   [clojure.lang.Compiler eval "Compiler.java" 7712]
+   [clojure.core$eval invokeStatic "core.clj" 3236]
+   [clojure.main$eval_opt invokeStatic "main.clj" 489]
+   [clojure.main$eval_opt invoke "main.clj" 483]
+   [clojure.main$initialize invokeStatic "main.clj" 509]
+   [clojure.main$null_opt invokeStatic "main.clj" 543]
+   [clojure.main$null_opt invoke "main.clj" 540]
+   [clojure.main$main invokeStatic "main.clj" 665]
+   [clojure.main$main doInvoke "main.clj" 617]
+   [clojure.lang.RestFn applyTo "RestFn.java" 140]
+   [clojure.lang.Var applyTo "Var.java" 707]
+   [clojure.main main "main.java" 40]],
+  :cause "org.codehaus.plexus.util.xml.Xpp3Dom",
+  :phase :execution}}
+
+Execution error (ClassNotFoundException) at java.net.URLClassLoader/findClass (URLClassLoader.java:377).
+org.codehaus.plexus.util.xml.Xpp3Dom
